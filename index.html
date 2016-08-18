@@ -1,1 +1,28 @@
-Hello World
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MathJax TeX Test Page</title>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+            </script>
+        <script type="text/javascript" async
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+            </script>
+    </head>
+    <body>
+        
+        <p id="problem"></p>
+        <input id="res" type="text" onchange="submit()"></input>
+        <button id="submit" onclick="submit()">Start</button>
+        <select id="set" onclick="changeSet(this)">
+            <option value="CPBasicSet">CPBasicSet</option>
+            <option value="ArithmeticSet">ArithmeticSet</option>
+            <option value="BasicReview">BasicReview</option>
+            <option value="PolynomialSet">PolynomialSet</option>
+        </select>
+        <p>Time left:</p> <p id="time"></p>
+        
+        <script src="drillgame.js"></script>
+        
+    </body>
+</html>
