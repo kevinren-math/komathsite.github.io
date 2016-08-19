@@ -557,8 +557,13 @@ function submit() {
     } else {
         console.log(problemSet.registerResponseForCurrentProblem(document.getElementById("res").value));
     }
-    document.getElementById("problem").innerHTML = problemSet.currentProblem[0];
+    updateProblemField(problemSet.currentProblem[0]);
     document.getElementById("res").value = "";
+}
+
+function updateProblemField(text) {
+    document.getElementById("problem").innerHTML = text;
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub,"problem"]);
 }
 
 function loadSet(url) {
@@ -569,7 +574,8 @@ function loadSet(url) {
             var myArr = JSON.parse(xmlhttp.responseText);
             problemSet = DGProblemSet(myArr);
             problemSet.loadWithArgs([10]);
-            document.getElementById("problem").innerHTML = problemSet.instructions;
+            if (theStartTime) updateProblemField(problemSet.instructions);
+            else document.getElementById("problem").innerHTML = problemSet.instructions;
             document.getElementById("submit").innerHTML = "Start";
         }
     };
@@ -579,6 +585,10 @@ function loadSet(url) {
 
 function changeSet(id) {
     loadSet("PSC/" + id.value + ".psc");
+    if (theTimer) {
+        clearInterval(theTimer);
+        document.getElementById("time").innerHTML = "";
+    }
 }
 
 function setTimer(time) {
@@ -601,5 +611,6 @@ function timer() {
     document.getElementById("time").innerHTML = timeLeft;
 }
 
-var theStartTime;
+var theStartTime, theTimer;
 changeSet(document.getElementById("set"));
+theStartTime = 1;
